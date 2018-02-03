@@ -135,6 +135,61 @@ msf auxiliary(smb) > set URIPATH /
 msf auxiliary(smb) > run
 ```
 
+### SMB Enumeration
+
+```Bash
+
+SMB1   – Windows 2000, XP and Windows 2003.
+SMB2   – Windows Vista SP1 and Windows 2008
+SMB2.1 – Windows 7 and Windows 2008 R2
+SMB3   – Windows 8 and Windows 2012.
+
+```
+
+#### Scanning for the NetBIOS Service
+
+- The SMB NetBIOS32 service listens on TCP ports 139 and 445, as well as several UDP ports.
+
+  ```Bash
+  > nmap -v -p 139,445 -oG smb.txt 192.168.11.200-254
+  ```
+
+- There are other, more specialized, tools for specifically identifying NetBIOS information
+
+  ```Bash
+  > nbtscan -r 192.168.11.0/24
+  ```
+
+#### Null Session Enumeration
+
+- A null session refers to an unauthenticated NetBIOS session between two computers. This feature exists to allow unauthenticated machines to obtain browse lists from other Microsoft servers.
+
+- A null session also allows unauthenticated hackers to obtain large amounts of information about the machine, such as password policies, usernames, group names, machine names, user and host SIDs.
+
+- This Microsoft feature existed in SMB1 by default and was later restricted in subsequent versions of SMB.
+
+```Bash
+
+> enum4linux -a 192.168.11.227
+
+```
+
+#### Nmap SMB NSE Scripts
+
+```Bash
+
+# These scripts can be found in the /usr/share/nmap/scripts directory
+> ls -l /usr/share/nmap/scripts/smb-
+# We can see that several interesting Nmap SMB NSE scripts exist,, such as OS discovery
+# and enumeration of various pieces of information from the protocol
+> nmap -v -p 139, 445 --script=smb-os-discovery 192.168.11.227
+# To check for known SMB protocol vulnerabilities,
+# you can invoke the nmap smb-check-vulns script
+> nmap -v -p 139,445 --script=smb-check-vulns --script-args=unsafe=1 192.168.11.201
+
+```
+
+
 ## Fix:
 http://www.leonteale.co.uk/netbios-nbns-spoofing/
 

@@ -175,6 +175,146 @@ Nmap allows for conducting numerous types of scans:
   - It slowly learns which proxies are alive and which are no longer active
   - Gets more stable and faster over time
 
+## Port Scanning
+
+Port scanning is the process of checking for open TCP or UDP ports on a remote machine.
+
+> --Please note that port scanning is illegal in many countries and should not be performed outside the labs.--
+
+### Connect Scanning
+
+- The simplest TCP port scanning technique, usually called CONNECT scanning, relies on the three-way TCP handshake mechanism.
+
+- Connect port scanning involves attempting to complete a three-way handshake with the target host on the specified port(s).
+- If the handshake is completed, this indicates that the port is open.
+
+```Bash
+# TCP Netcat port scan on ports 3388-3390
+> nc -nvv -w 1 -z 10.0.0.19 3388-3390
+# -n :: numeric only ip adressess no DNS
+# -v :: verboose use twice to be more verboose
+# -w :: (secs) timeout for connects and final net reads
+# -z :: zero I/O mode (used for scanning)
+```
+
+### Stealth / SYN Scanning
+
+- SYN scanning, or stealth scanning, is a TCP port scanning method that involves sending SYN packets to various ports on a target machine without completing a TCP handshake.
+- If a TCP port is open, a SYN-ACK should be sent back from the target machine, informing us that the port is open, without the need to send a final ACK back to the target machine.
+
+- With early and primitive firewalls, this method would often bypass firewall logging, as this logging was limited to completed TCP sessions.
+- This is no longer true with modern firewalls, and the term stealth is misleading. Users might believe their scans will somehow not be detected, when in fact, they will be.
+
+### UDP Scanning
+
+```Bash
+> nc -nv -u -z -w 1 10.0-0.19 160-162
+# -u :: UDP mode
+```
+
+### Common Port Scanning Pitfalls
+
+- UDP port scanning is often unreliable, as firewalls and routers may drop ICMP packets. This can lead to false positives in your scan, and you will regularly see UDP port scans showing all UDP ports open on a scanned machine.
+- Most port scanners do not scan all available ports, and usually have a preset list of “interesting ports” that are scanned.
+- People often forget to scan for UDP services, and stick only to TCP scanning, thereby seeing only half of the equation.
+
+### Port Scanning with Nmap
+
+- A default nmap TCP scan will scan the 1000 most popular ports on a given machine.
+
+```Bash
+# We’ll scan one of my local machines while monitoring the amount
+# of traffic sent to the specific host using iptables.
+> iptables -I INPUT 1 -s 10.0.0.19 -j ACCEPT
+> iptables -I OUTPUT 1 -d 10.0.0.19 -j ACCEPT
+> iptables -Z
+# -I :: insert in chain as rulenum ( default 1=first)
+# -s :: source (address)
+# -j :: jump target for the rulw
+# -Z :: ??
+
+> nmpap -sT 10.0.0.9
+> iptables -vn -L
+> iptables -Z
+# -sT :: TCP Connect Scan
+# -v :: Display more information in the output
+# -L :: List the current filter rules.
+
+> nmap -sT -p 1-65635 10.0.0.19
+> iptables -vn -L
+# -p :: port range
+  ```
+
+- This default 1000 port scan has generated around 72KB of traffic.
+- A similar local port scan explicitly probing all 65535 ports would generate about 4.5 MB of traffic, a significantly higher amount.
+- However, this full port scan has discovered two new ports that were not found by the default TCP scan: ports 180 and 25017.
+
+--Full nmap scan of a class C network (254 hosts) would result in sending over 1000 MB of traffic to the network.--
+
+__So, if we are in a position where we can’t run a full port scan on the network, what can we do?__
+
+### Network Sweeping
+
+- To deal with large volumes of hosts, or to otherwise try to conserve network traffic, we can attempt to probe these machines using Network Sweeping techniques.
+
+- Machines that filter or block ICMP requests may seem down to a ping sweep, so it is not a definitive way to identify which machines are really up or down.
+
+```Bash
+
+> nmap -sP 192.168.1.0/24 ## Deprecated in modern versions Use -sn instead
+Show ips of connected devices
+
+> nmap -sn 192.168.11.200-250
+# -sn :: ping scan
+# using the grep command can give you output that’s difficult to manage.
+# let’s use Nmap’s “greppable” output parameter (-oG)
+> nmap -v -sn 192.168.11.200-250 -oG ping-sweep.txt
+> grep Up ping-sweep.txt | cut -d " " -f 2
+
+# we can sweep for specific TCP or UDP ports (-p) across the network
+> nmap ­-p 80 192.168.11.200-250 -oG web-sweep.txt
+> grep open web­-sweep.txt |cut ­-d " " -f 2
+
+# we are conducting a scan for the top 20 TCP ports.
+> nmap –sT –A --top­-ports=20 192.168.11.200-250 –oG top­-port-­sweep.txt
+
+```
+
+- Machines that prove to be rich in services, or otherwise interesting, would then be individually port scanned, using a more exhaustive port list.
+
+### OS Fingerprinting
+
+```Bash
+
+# OS fingerprinting (-O parameter).
+> nmap -O 10.0.0.19
+
+```
+
+### Banner Grabbing/Service Enumeration
+
+Nmap can also help identify services on specific ports, by banner grabbing, and running several enumeration scripts (-sV and -A parameters).
+
+```Bash
+
+> nmap -sV -sT 10.0.0.19
+# -sV :: probe open ports to determine service / version info
+
+```
+
+### Nmap Scripting Engine (NSE)
+
+- The scripts include a broad range of utilities, from DNS enumeration scripts, brute force attack scripts, and even vulnerability identification scripts.
+
+- All NSE scripts can be found in the /usr/share/nmap/scripts directory
+
+```Bash
+
+> nmap 10.0.0.19 --script smb-os-discovery.nse
+# Another useful script is the DNS zone transfer NSE script
+> nmap --script=dns-zone-transfer -p 53 ns2.megacorpone.com
+
+```
 #### Locally checking for listening ports on windows
 
 - In Windows, run `C:\> netstat -na` --> Shows listening TCP/UDP ports
