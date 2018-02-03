@@ -23,7 +23,7 @@
   - Open Web Information Gathering
   - Email Harvesting
   - Additional Resources
-  - ReconLng
+  - Recon-ng
 
 - Active Information Gathering
   - DNS Enumeration
@@ -73,11 +73,11 @@
 
 - Client Side Attacks
   - Know Your Target
-  - MS12L037Internet Explorer 8 Fixed CoSpan ID
+  - MS12-037 Internet Explorer 8 Fixed CoSpan ID
   - Java Signed Applet Attack
 
 - Web Application Attacks
-  - Essential firefox AddLons
+  - Essential firefox Addons
   - Cross Site Scripting (XSS)
   - File Inclusion Vulnerabilities
   - MySQL SQL Injection
@@ -118,4 +118,4 @@
   - Phase 2 – Vulnerability Identification and Prioritization
   - Phase 3 – Research and Development
   - Phase 4 – Exploitation
-  - Phase 5 – PostLExploitation
+  - Phase 5 – Post-Exploitation

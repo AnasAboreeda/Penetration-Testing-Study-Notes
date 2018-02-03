@@ -195,24 +195,7 @@ Windows Privledge Escalation
 - [io.netgarage.org](https://io.netgarage.org)
 - [picoCTF 2017](https://picoctf.com)Designed for high school students while the event is usually new every year, it's left online and has a great - difficulty progression
 - [plateforme d'apprentissage dédiée au Hacking et à la Sécurité de l'Information](https://root-me.org)
-- ~~[dead link](http://dc3.mil/challenge)~~
-- ~~[dead link](http://foundstone.com/…/resourc…/proddesc/hacmebooks.htm)~~
-- ~~[dead link](http://foundstone.com/…/resour…/proddesc/hacmecasino.htm)~~
-- ~~[dead link](http://foundstone.com/…/resour…/proddesc/hacmetravel.htm)~~
-- ~~[dead link](http://foundstone.com/…/reso…/proddesc/hacmeshipping.htm)~~
-- ~~[dead link](http://gat3way.eu/index.php)~~
-- ~~[dead link](http://ha.ckers.org/challenge)~~
-- ~~[dead link](http://ha.ckers.org/challenge2)~~
-- ~~[dead link](http://hackme.ntobjectives.com)~~
-- ~~[dead link](http://hackthecause.info)~~
-- ~~[dead link](http://hackthissite.org)~~
-- ~~[dead link](http://p6drad-teel.net/~windo/wargame)~~
-- ~~[dead link](http://prequals.nuitduhack.com)~~
-- ~~[dead link](http://pwnerrank.com)~~
-- ~~[dead link](http://securityoverride.org)~~
-- ~~[dead link](http://testasp.acunetix.com/Default.asp)~~
-- ~~[dead link](http://testphp.acunetix.com)~~
-- ~~[dead link](https://how2hack.net)~~
+
 
 
 <!DOCTYPE NETSCAPE-Bookmark-file-1>
@@ -332,3 +315,4 @@ http://www.offensive-security.com/metasploit-unleashed/Main_Page
 I also read the hackers playbook, the Metasploit unleashed book, and the Penetration Testing book by Georgia Weidman.
 These are all very good resources.
 
+- [Web Application Security on Fire - PHP Developers Cheat Sheet Version] (https://speakerdeck.com/symbiansymoh/web-application-security-on-fire-php-developers-cheat-sheet-version)
