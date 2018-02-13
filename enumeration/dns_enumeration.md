@@ -1,8 +1,6 @@
 # DNS Enumeration
 
-## DNS Enumeration
-
-    DNS offers a variety of information about public (and sometimes private!) organization servers, such as IP addresses, server names, and server functionality.
+DNS offers a variety of information about public (and sometimes private!) organization servers, such as IP addresses, server names, and server functionality.
 
 ### Interacting with a DNS Server
 
@@ -140,7 +138,6 @@ If the DNS administrator of megacorpone.com configured PTR records for the domai
   > pip3 install fierce
   > fierce --domain zonetransfer.me
   ```
-
 
 - NMAP DNS Hostnames Lookup
 

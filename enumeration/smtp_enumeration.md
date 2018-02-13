@@ -6,8 +6,6 @@ root@kali:~# nc -nv 192.168.1.12 25
 220 WIN-3UR24XX66QZ Microsoft ESMTP MAIL Service, Version: 7.0.6001.18000 ready at    Thu, 4 Jan 2018 11:48:35 +0200
 ```
 
-#### SMTP Enumeration
-
 - mail servers can also be used to gather information about a host or network.
 - SMTP supports several important commands, such as VRFY and EXPN.
 - A VRFY request asks the server to verify an email address
