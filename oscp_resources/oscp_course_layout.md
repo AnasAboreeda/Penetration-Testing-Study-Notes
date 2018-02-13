@@ -13,7 +13,7 @@
   - The Bash Environment
   - Intro to Bash Scripting
 
-- The EssentiaTools
+- The Essential Tools
   - Netcat
   - Ncat
   - Wireshark
