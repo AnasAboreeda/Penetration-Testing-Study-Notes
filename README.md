@@ -10,5 +10,7 @@ Most of the credit for this work goes to those **awesome** people
 
 - [adon90](https://github.com/adon90/pentest_compilation)
 - [dostoevskylabs](https://github.com/dostoevskylabs/dostoevsky-pentest-notes)
-- 
+- [ihack4falafel](https://github.com/ihack4falafel/OSCP)
+- [ferreirasc](https://github.com/ferreirasc/oscp)
+- [slyth11907](https://github.com/slyth11907/Cheatsheets)
 
