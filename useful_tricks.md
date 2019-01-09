@@ -46,7 +46,7 @@ proxychains ssh john@127.0.0.1</pre>
 
 ### HTTP Enumeration
 
-- dirsearch big.txt -e sh,txt,htm,php,cgi,html,pl,bak,old - banner inspection - review source code - bruteforce with cewl-based dictionary - searchsploit look at versions properly - test all the paths with the exploits, mangle it - nmap --script vuln - nmap --script safe (ssl-cert, virtual hosts) - always incercept with Burp - nikto -h - LFI, RFI, SQL, RCE, XXE, SSRF injections - PUT method all directories - Change POST body encoding with Burp - Bruteforce parameter names - dirsearch with cookie once authenticated - download vulnerable application from exploit-db and examine it
+- dirsearch big.txt -e sh,txt,htm,php,cgi,html,pl,bak,old - banner inspection - review source code - bruteforce with cewl-based dictionary - searchsploit look at versions properly - test all the paths with the exploits, mangle it - nmap --script vuln - nmap --script safe (ssl-cert, virtual hosts) - always intercept with Burp - nikto -h - LFI, RFI, SQL, RCE, XXE, SSRF injections - PUT method all directories - Change POST body encoding with Burp - Bruteforce parameter names - dirsearch with cookie once authenticated - download vulnerable application from exploit-db and examine it
 
 ### SSH Enumeration
 
@@ -58,7 +58,7 @@ proxychains ssh john@127.0.0.1</pre>
 
 ### BOF exploit-based
 
-- change shellcode - make sure all badchars are removed - read the exploit properly in case this makes changes in the shellcode - capture traffic with wireshark making sure the entire shellcode is transmited - run the exploit several times - make sure the JMP ESP matches OS and language
+- change shellcode - make sure all badchars are removed - read the exploit properly in case this makes changes in the shellcode - capture traffic with wireshark making sure the entire shellcode is transmitted - run the exploit several times - make sure the JMP ESP matches OS and language
 
 ### SNMP Enumeration
 
