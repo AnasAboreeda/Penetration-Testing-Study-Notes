@@ -1,4 +1,4 @@
-# Usefuls scripts and commands
+# Useful scripts and commands
 
 ## VNC over SSH Tunneling
 
