@@ -10,19 +10,23 @@ The method of the delivery method is to backdoor files that is downloading from 
 
 Run:
 
-    cd /opt
-    git clone https://github.com/secretsquirrel/BDFProxy.git
-    cd BDFProxy
-    ./install.sh
-    apt -y install python-pip python-dev libffi-dev libssl-dev libxml2-dev libxslt1-dev zlib1g-dev
-    pip install capstone mitmproxy==0.13
+```bash
+cd /opt
+git clone https://github.com/secretsquirrel/BDFProxy.git
+cd BDFProxy
+./install.sh
+apt -y install python-pip python-dev libffi-dev libssl-dev libxml2-dev libxslt1-dev zlib1g-dev
+pip install capstone mitmproxy==0.13
+```
 
 Configure BDFProxy:
-
-    cd /opt/BDFProxy
-    vim bdfproxy.cfg
+```bash
+cd /opt/BDFProxy
+vim bdfproxy.cfg
+```
 
 Change the following to: 
+
     
     proxyMode = transparent
 
@@ -32,11 +36,13 @@ Find config of each os:
 
 Execute bdfproxy.py
 
-    python bdf_proxy.py
+```bash
+python bdf_proxy.py
 
 or
 
-    ./bdf_proxy.py
+./bdf_proxy.py
+```
 
 
 Performing MITM attack:
