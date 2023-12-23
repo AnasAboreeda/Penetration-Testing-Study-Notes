@@ -1,0 +1,3 @@
+[submodule "hacktricks"]
+	path = hacktricks
+	url = git@github.com:carlospolop/hacktricks.git

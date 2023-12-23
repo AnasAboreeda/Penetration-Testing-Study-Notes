@@ -11,13 +11,13 @@ If you liked the old content, you can find it in the [archive](archive) folder.
   - [Preparation](#preparation)
   - [Reconnaissance](#reconnaissance)
     - [Subdomain Enumeration](#subdomain-enumeration)
-    - [Subdomain Takeover](#subdomain-takeover)
     - [Get alive subdomains](#get-alive-subdomains)
+    - [Subdomain Takeover](#subdomain-takeover)
+    - [Get S3 buckets](#get-s3-buckets)
     - [Content Discovery](#content-discovery)
     - [Get Screenshots of the alive subdomians](#get-screenshots-of-the-alive-subdomians)
     - [Add all live domains to burpsuite](#add-all-live-domains-to-burpsuite)
     - [Get IPs, PORTS, and Services](#get-ips-ports-and-services)
-    - [Get S3 buckets](#get-s3-buckets)
     - [Get Broken social links](#get-broken-social-links)
   - [Scanning](#scanning)
     - [XSS Scanning](#xss-scanning)
@@ -69,6 +69,14 @@ cat subdomains.txt| wc -l
 ## Check https://dnsdumpster.com/ it has nice graph
 ```
 
+### Get alive subdomains
+
+```bash
+~/go/bin/httpx -l subdomains.txt -o subdomains-alive.txt
+
+cat subdomains-alive.txt | wc -l
+```
+
 ### Subdomain Takeover
 
 - [Can I Take Over XYZ?](https://github.com/EdOverflow/can-i-take-over-xyz)
@@ -89,12 +97,13 @@ subzy run --targets subdomains.txt --timeout 20 --output subdomain_subzy.txt
 subjack -w subdomains.txt -t 100 -timeout 30 -o subdomain_subjack.txt -ssl
 ```
 
-### Get alive subdomains
+### Get S3 buckets
 
 ```bash
-~/go/bin/httpx -l subdomains.txt -o subdomains-alive.txt
+slurp domain -t booking.com
 
-cat subdomains-alive.txt | wc -l
+# TODO: check s3 workflow
+# also check this https://github.com/nikhil1232/Bucket-Flaws
 ```
 
 ### Content Discovery
@@ -161,15 +170,6 @@ cat subdomains-alive.txt | xargs -P 10 -I {} curl -k -x http://localhost:8080 {}
 - Go to https://www.shodan.io/
   - Search: `org:"TARGET.com"`
   - OR `ssl:"TARGET.com"`
-
-### Get S3 buckets
-
-```bash
-slurp domain -t booking.com
-
-# TODO: check s3 workflow
-# also check this https://github.com/nikhil1232/Bucket-Flaws
-```
 
 ### Get Broken social links
 
