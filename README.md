@@ -1,25 +1,56 @@
-# Pentensting - Everything, Everywhere, All In One Place
+# Pentesting - Everything, Everywhere, All In One Place
 
 This is a collection of all the commands and tools I use for pentesting. I will try to keep it updated as much as possible.
 
 If you liked the old content, you can find it in the [archive](archive) folder.
 
+## Bug Hunting Roadmap
+
+- [ ] Grab all the in-scope urls
+- [ ] Subdomain enumeration for everyone of them
+- [ ] Get live subdomains
+- [ ] Check for subdomain takeover
+- [ ] Screenshot all the live domains
+- [ ] Network
+  - [ ] Open Ports / Services
+- [ ] Content Discovery
+  - [ ] Framework
+  - [ ] Favicon
+  - [ ] Directories
+  - [ ] URLs
+  - [ ] S3 Buckets
+  - [ ] JS files
+  - [ ] Broken Social Links
+  - [ ] GIT Repositories
+- [ ] Vulnerability Scanning
+  - [ ] XSS Scanning
+  - [ ] SQL Injection
+  - [ ] XXE Injection
+  - [ ] SSRF Injection
+  - [ ] Race Condition Testing
+  - [ ] CORS Vulnerability Testing
+  - [ ] Parameter Tampering
+  - [ ] Local File Inclusion / Directory Traversal
+  - [ ] IDOR
+    
+
 ## Table of Contents
 
-- [Pentensting - Everything, Everywhere, All In One Place](#pentensting---everything-everywhere-all-in-one-place)
+- [Pentesting - Everything, Everywhere, All In One Place](#pentesting---everything-everywhere-all-in-one-place)
+  - [Bug Hunting Roadmap](#bug-hunting-roadmap)
   - [Table of Contents](#table-of-contents)
   - [Preparation](#preparation)
   - [Reconnaissance](#reconnaissance)
     - [Subdomain Enumeration](#subdomain-enumeration)
-    - [Get alive subdomains](#get-alive-subdomains)
+    - [Get live subdomains](#get-live-subdomains)
     - [Subdomain Takeover](#subdomain-takeover)
-    - [Get S3 buckets](#get-s3-buckets)
+    - [Get Screenshots of the live subdomians](#get-screenshots-of-the-live-subdomians)
     - [Content Discovery](#content-discovery)
-    - [Get Screenshots of the alive subdomians](#get-screenshots-of-the-alive-subdomians)
+    - [Get S3 buckets](#get-s3-buckets)
     - [Add all live domains to burpsuite](#add-all-live-domains-to-burpsuite)
     - [Get IPs, PORTS, and Services](#get-ips-ports-and-services)
     - [Get Broken social links](#get-broken-social-links)
-  - [Scanning](#scanning)
+  - [Vulnerabilities Scanning](#vulnerabilities-scanning)
     - [XSS Scanning](#xss-scanning)
     - [SQL Injection](#sql-injection)
     - [XXE Injection](#xxe-injection)
@@ -38,6 +69,7 @@ export TARGET="target.com"
 mkdir $TARGET
 cd $TARGET
 mkdir screenshots
+export VT_APIKEY=<YourAPIKEY>
 ```
 
 ## Reconnaissance
@@ -52,11 +84,9 @@ findomain -t $TARGET -q > subdomains_2.txt
 
 sublist3r -d $TARGET -t 3 -n -o subdomains_3.txt
 
-gobuster vhost -u $TARGET -w /usr/share/wordlists/seclists/Discovery/DNS/subdomains-top1million-110000.txt | grep 200 > subdomains_4.txt
+gobuster vhost --no-color --append-domain -q -t 50 -u http://$TARGET -w /usr/share/wordlists/seclists/Discovery/DNS/subdomains-top1million-110000.txt -o raw_subdomains_4.txt
 
-wfuzz -w /usr/share/wordlists/SecLists-master/Discovery/DNS/subdomains-top1million-110000.txt --hc 404 --hl 9  -c -t 50 -u $TARGET -H "Host: FUZZ.$TARGET" | grep 200 > subdomains_5.txt
-
-massdns -r /usr/share/massdns/lists/resolvers.txt -t A -o S -w resolved.txt subdomains_6.txt
+grep -oE 'Found: [^ ]+' raw_subdomains_4.txt | awk '{print $2}' > subdomains_4.txt
 
 cat subdomains*.txt | sort | uniq > subdomains.txt
 
@@ -69,12 +99,12 @@ cat subdomains.txt| wc -l
 ## Check https://dnsdumpster.com/ it has nice graph
 ```
 
-### Get alive subdomains
+### Get live subdomains
 
 ```bash
-~/go/bin/httpx -l subdomains.txt -o subdomains-alive.txt
+~/go/bin/httpx -l subdomains.txt -o subdomains-live.txt
 
-cat subdomains-alive.txt | wc -l
+cat subdomains-live.txt | wc -l
 ```
 
 ### Subdomain Takeover
@@ -97,38 +127,19 @@ subzy run --targets subdomains.txt --timeout 20 --output subdomain_subzy.txt
 subjack -w subdomains.txt -t 100 -timeout 30 -o subdomain_subjack.txt -ssl
 ```
 
-### Get S3 buckets
+### Get Screenshots of the live subdomians
 
 ```bash
-slurp domain -t booking.com
+eyewitness -f subdomains-live.txt --web -d screenshots --timeout 100 --delay 10 --proxy-ip 127.0.0.1 --proxy-port 8080
 
-# TODO: check s3 workflow
-# also check this https://github.com/nikhil1232/Bucket-Flaws
+# or
+
+cat subdomains-live.txt | aquatone --out screenshots -scan-timeout 900 -chrome-path /usr/bin/chromium
 ```
 
 ### Content Discovery
 
-```bash
-wfuzz -w /usr/share/wordlists/dirb/common.txt --hc 404 --hl 9  -c -t 50 $TARGET/FUZZ | grep 200 > content-discovery.txt
-
-# Extract links using GoLinkFinder
-gofinder $TARGET | tee -a content-discovery.txt
-
-# Extract all URLs using getallurls
-getallurls $TARGET | tee -a content-discovery.txt
-
-# Extract archived URLs using WayBackUrls
-waybackurls $TARGET | tee -a content-discovery.txt
-
-# Extract robots.txt from archived URLs using WayBackRobots
-waybackrobots $TARGET | tee -a content-discovery.txt
-
-ffuf -w /usr/share/wordlists/SecLists/Discovery/Web-Content/common.txt -u $TARGET/FUZZ | tee -a content-discovery.txt
-
-dirb $TARGET/ /usr/share/wordlists/SecLists/Discovery/Web-Content/common.txt | tee -a content-discovery.txt
-
-gobuster dir --url $TARGET/ -w /usr/share/wordlists/SecLists/Discovery/Web-Content/common.txt | tee -a content-discovery.txt
-```
+- Run this script [content-discovery.sh](./scripts/content-discovery.sh)
 
 - Check favicon, Search here for the md5 to get the framework [OWASP_favicon_database](https://wiki.owasp.org/index.php/OWASP_favicon_database)
 
@@ -149,20 +160,19 @@ curl $TARGET/favicon.ico | md5sum
 - Check https://archive.org/web/
 - Check Github / Gitlab / Bitbucket
 
-### Get Screenshots of the alive subdomians
+### Get S3 buckets
 
 ```bash
-eyewitness -f subdomains-alive.txt --web -d screenshots --timeout 100 --delay 10 --proxy-ip 127.0.0.1 --proxy-port 8080
+slurp domain -t booking.com
 
-# or
-
-cat subdomains-alive.txt | aquatone --out screenshots -scan-timeout 900 -chrome-path /usr/bin/chromium
+# TODO: check s3 workflow
+# also check this https://github.com/nikhil1232/Bucket-Flaws
 ```
 
 ### Add all live domains to burpsuite
 
 ```bash
-cat subdomains-alive.txt | xargs -P 10 -I {} curl -k -x http://localhost:8080 {} -o /dev/null
+cat subdomains-live.txt | xargs -P 10 -I {} curl -k -x http://localhost:8080 {} -o /dev/null
 ```
 
 ### Get IPs, PORTS, and Services
@@ -174,10 +184,10 @@ cat subdomains-alive.txt | xargs -P 10 -I {} curl -k -x http://localhost:8080 {}
 ### Get Broken social links
 
 ```bash
-socialhunter -f subdomains-alive.txt -w 10 > sociallinks-hunting.txt
+socialhunter -f subdomains-live.txt -w 10 > sociallinks-hunting.txt
 ```
 
-## Scanning
+## Vulnerabilities Scanning
 
 ### XSS Scanning
 

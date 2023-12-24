@@ -57,4 +57,11 @@ go install -v github.com/projectdiscovery/naabu/v2/cmd/naabu@latest
 
 go install -v github.com/LukaSikic/subzy@lates
 go install github.com/haccer/subjack@latest
+go install -v github.com/kkirsche/gofinder@latest
+apt install getallurls -y
+go install github.com/tomnomnom/waybackurls@latest
+go install github.com/vodafon/waybackrobots@latest
+apt install jq -y
+go install -v github.com/LukaSikic/subzy@latest
+go install github.com/haccer/subjack@latest 
 ```
