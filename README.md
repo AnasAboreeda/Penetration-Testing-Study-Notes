@@ -61,6 +61,7 @@ If you liked the old content, you can find it in the [archive](archive) folder.
     - [Local File Inclusion / Directory Traversal](#local-file-inclusion--directory-traversal)
     - [IDOR](#idor)
   - [Online Tools](#online-tools)
+  - [References](#references)
 
 ## Preparation
 
@@ -289,3 +290,7 @@ This type of vulnerability can occur when a web server receives user-supplied in
 - [CrackStation](https://crackstation.net/)
 - [CyberChef](https://gchq.github.io/CyberChef/)
 - [DNSDumpster](https://dnsdumpster.com/)
+
+## References
+
+- [Interview Questions](https://tib3rius.com/interview-questions)
