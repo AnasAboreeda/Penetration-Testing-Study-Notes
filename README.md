@@ -32,7 +32,6 @@ If you liked the old content, you can find it in the [archive](archive) folder.
   - [ ] Parameter Tampering
   - [ ] Local File Inclusion / Directory Traversal
   - [ ] IDOR
-    
 
 ## Table of Contents
 
@@ -61,6 +60,7 @@ If you liked the old content, you can find it in the [archive](archive) folder.
     - [Parameter Tampering](#parameter-tampering)
     - [Local File Inclusion / Directory Traversal](#local-file-inclusion--directory-traversal)
     - [IDOR](#idor)
+  - [Online Tools](#online-tools)
 
 ## Preparation
 
@@ -283,3 +283,9 @@ This type of vulnerability can occur when a web server receives user-supplied in
   - it can be hashed
   - it can be encoded
   - if it’s unpredictable like uuid, you should create 2 accounts and try to swap their ids and see if you can access each other’s private content like profiles
+
+## Online Tools
+
+- [CrackStation](https://crackstation.net/)
+- [CyberChef](https://gchq.github.io/CyberChef/)
+- [DNSDumpster](https://dnsdumpster.com/)
