@@ -1,3 +1,6 @@
 [submodule "hacktricks"]
 	path = hacktricks
 	url = git@github.com:carlospolop/hacktricks.git
+[submodule "Nuclei-Templates-Collection"]
+	path = Nuclei-Templates-Collection
+	url = https://github.com/emadshanab/Nuclei-Templates-Collection.git

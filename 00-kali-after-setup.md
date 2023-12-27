@@ -97,8 +97,12 @@ go install github.com/utkusen/socialhunter@latest
 git clone https://github.com/projectdiscovery/fuzzing-templates.git
 
 # Install Katana, Naabu, Subzy, Subjack, Gofinder, Getallurls, Waybackurls, Waybackrobots, and jq
+sudo apt update
 apt install getallurls -y
 apt install jq -y
+apt install -y feroxbuster
+
+ pip3 install apkleaks
 
 go install github.com/OJ/gobuster/v3@latest
 go install github.com/ffuf/ffuf/v2@latest
@@ -109,4 +113,7 @@ go install github.com/haccer/subjack@latest
 go install github.com/kkirsche/gofinder@latest
 go install github.com/tomnomnom/waybackurls@latest
 go install github.com/vodafon/waybackrobots@latest
+go install github.com/j3ssie/osmedeus@latest
+go install github.com/ameenmaali/wordlistgen@latest
+go install github.com/michael1026/trashcompactor@latest
 ```

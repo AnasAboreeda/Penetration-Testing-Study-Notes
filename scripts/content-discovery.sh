@@ -57,6 +57,9 @@ run_commands() {
     echo "waybackrobots command completed for $subdomain..."
     echo "waybackrobots command completed for $subdomain..." >> "$log_file"
     
+    
+    feroxbuster -u "$subdomain" --insecure --proxy http://127.0.0.1:8080
+    
     print_separator_2
     
     ffuf -w /usr/share/wordlists/seclists/SecLists-master/Discovery/Web-Content/common.txt -u "$subdomain/FUZZ" >> "$output_file"

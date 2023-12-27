@@ -44,7 +44,9 @@ If you liked the old content, you can find it in the [archive](archive) folder.
     - [Get live subdomains](#get-live-subdomains)
     - [Subdomain Takeover](#subdomain-takeover)
     - [Get Screenshots of the live subdomians](#get-screenshots-of-the-live-subdomians)
+    - [Port Scanning](#port-scanning)
     - [Content Discovery](#content-discovery)
+      - [Content Discovery Lists](#content-discovery-lists)
     - [Get S3 buckets](#get-s3-buckets)
     - [Add all live domains to burpsuite](#add-all-live-domains-to-burpsuite)
     - [Get IPs, PORTS, and Services](#get-ips-ports-and-services)
@@ -60,6 +62,9 @@ If you liked the old content, you can find it in the [archive](archive) folder.
     - [Parameter Tampering](#parameter-tampering)
     - [Local File Inclusion / Directory Traversal](#local-file-inclusion--directory-traversal)
     - [IDOR](#idor)
+  - [Tips and Tricks](#tips-and-tricks)
+    - [Start a local server to serve local files in a directory](#start-a-local-server-to-serve-local-files-in-a-directory)
+    - [Listen to a local port](#listen-to-a-local-port)
   - [Online Tools](#online-tools)
   - [References](#references)
 
@@ -138,9 +143,88 @@ eyewitness -f subdomains-live.txt --web -d screenshots --timeout 100 --delay 10 
 cat subdomains-live.txt | aquatone --out screenshots -scan-timeout 900 -chrome-path /usr/bin/chromium
 ```
 
+### Port Scanning
+
+```bash
+naabu -iL subdomains-live.txt -silent -exclude-cdn -top-ports 1000 -o ports.txt
+```
+
 ### Content Discovery
 
+1. Based on Tech
+2. COTS / PAID / OSS
+3. Custom
+4. Historical
+5. Recursive
+6. Mobile APIs
+7. Change Detection
+
+
+#### Content Discovery Lists
+
+- Download the lists from [here](https://wordlists-cdn.assetnote.io/data/)
+
+`wget -r --no-parent -R "index.html*" https://wordlists-cdn.assetnote.io/data/ -nH -e robots=off`
+
+1. Tech 
+   1. IIS / MSF 
+      1. assetnote/httparchive_aspx_asp_cfm_svc_ashx_asmx_
+      2. IIS Shortname Scanner
+   2. PHP + CGI
+      1. assetnote/httparchive_cgi_pl
+      2. assetnote/httparchive_php
+   3. General API
+      1. assetnote/httparchive_apiroutes_
+      2. assetnote/swagger-wordlist
+      3. seclists/Discovery/Web-Content/api/api-endpoints.txt
+   4. Java
+      1. assetnote/httparchive_jsp_jspa_do_action
+   5. Generic
+      1. assetnote/httparchive_directories_1m_
+      2. RAFT
+      3. Robots Disallowed
+      4. github.com/six2dez/OneListForAll
+      5. jhadix/content_discovery_all.txt
+   6. Other
+      1. Use Technology <=> Host Mappings from [assetnote.io](https://wordlists.assetnote.io/)
+           - adobe_experience_manager  <=> assetnote/httparchive_adobe_experience_manager
+           - apache  <=> assetnote/httparchive_apache
+           - cherrypy  <=> assetnote/httparchive_cherrypy
+           - coldfusion  <=> assetnote/httparchive_coldfusion
+           - django  <=> assetnote/httparchive_django
+           - express  <=> assetnote/httparchive_express
+           - flask  <=> assetnote/httparchive_flask
+           - laravel  <=> assetnote/httparchive_laravel
+           - nginx  <=> assetnote/httparchive_nginx
+           - rails  <=> assetnote/httparchive_rails
+           - spring  <=> assetnote/httparchive_spring
+           - symfony  <=> assetnote/httparchive_symfony
+           - tomcat  <=> assetnote/httparchive_tomcat
+           - yii  <=> assetnote/httparchive_yii
+           - zend  <=> assetnote/httparchive_zend
+2. OSS (Open Source Software) / PAID / COTS (Commercial Off The Shelf)
+   1. If the app is open source, you can use the source code to find endpoints
+      1. You can use [Source2URL](https://github.com/danielmiessler/Source2URL/blob/master/Source2URL)
+   2. PAID / COTS (Commercial Off The Shelf)
+      1. Download a Demo version of the software
+3. Custom
+   1. use [Scavneger](https://github.com/0xDexter0us/Scavenger) to generate custom wordlists from burp history
+4. Historical
+   1. `echo bugcrowd.com | gau | wordlistgen | sort -u > wordlist.txt`
+5. Recursive
+   1. Do recursion on 401 and 403 pages, and then do content discovery on the new pages
+6. Mobile APIs
+   1. Scan APK file for URIs, endpoints & secrets. [apkleaks](https://github.com/dwisiswant0/apkleaks)
+7. Change Detection
+   1. subscribe to the newsletter of the target
+   2. conferences / events / webinars from the targets
+   3. Monitor the target's social media accounts
+   4. [change detection](https://changedetection.io/)
+
+
 - Run this script [content-discovery.sh](./scripts/content-discovery.sh)
+
+`feroxbuster -u http://localhost:3000/#/ --extract-links -o links.txt --filter-status 404 500 --rate-limit 100 --scan-limit 1 -t 10 --random-agent `
 
 - Check favicon, Search here for the md5 to get the framework [OWASP_favicon_database](https://wiki.owasp.org/index.php/OWASP_favicon_database)
 
@@ -160,6 +244,7 @@ curl $TARGET/favicon.ico | md5sum
 
 - Check https://archive.org/web/
 - Check Github / Gitlab / Bitbucket
+- Search in target tab in Burp Suite for words like: path, link, ...
 
 ### Get S3 buckets
 
@@ -285,12 +370,33 @@ This type of vulnerability can occur when a web server receives user-supplied in
   - it can be encoded
   - if it’s unpredictable like uuid, you should create 2 accounts and try to swap their ids and see if you can access each other’s private content like profiles
 
+## Tips and Tricks
+
+### Start a local server to serve local files in a directory
+
+```bash
+
+python3 -m http.server 8000
+
+```
+
+### Listen to a local port
+
+```bash
+nc -nlvp 9001
+```
+
 ## Online Tools
 
-- [CrackStation](https://crackstation.net/)
+- [CrackStation - Free Password Hash Cracker](https://crackstation.net/)
 - [CyberChef](https://gchq.github.io/CyberChef/)
 - [DNSDumpster](https://dnsdumpster.com/)
+- [Reverse Shell Generator](https://www.revshells.com/)
 
 ## References
 
 - [Interview Questions](https://tib3rius.com/interview-questions)
+- [Security Reference Guide](https://s0cm0nkey.gitbook.io/s0cm0nkeys-security-reference-guide/)
+- [HackTricks](https://book.hacktricks.xyz/)
+- [Awesome Pentest Cheat SheetsW](https://github.com/coreb1t/awesome-pentest-cheat-sheets)
+- [Awesome Bugbounty Tools](https://github.com/vavkamil/awesome-bugbounty-tools)
