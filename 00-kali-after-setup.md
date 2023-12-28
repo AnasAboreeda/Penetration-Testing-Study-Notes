@@ -10,6 +10,7 @@
 - Install [BuiltWith](https://addons.mozilla.org/en-US/firefox/addon/builtwith/)
 - Install [Foxy Proxy](https://addons.mozilla.org/nl/firefox/addon/foxyproxy-standard/)
 - Install [User-Agent Switcher and Manager](https://addons.mozilla.org/en-US/firefox/addon/user-agent-string-switcher/)
+- Install [XnlReveal](https://github.com/xnl-h4ck3r/XnlReveal)
 
 ## Install Go
 
@@ -116,4 +117,13 @@ go install github.com/vodafon/waybackrobots@latest
 go install github.com/j3ssie/osmedeus@latest
 go install github.com/ameenmaali/wordlistgen@latest
 go install github.com/michael1026/trashcompactor@latest
+go install github.com/hakluke/hakrawler@latest
+go install github.com/jaeles-project/gospider@latest
+```
+
+```bash
+# Install xnLinkFinder to find js
+git clone https://github.com/xnl-h4ck3r/xnLinkFinder.git
+cd xnLinkFinder
+sudo python setup.py install
 ```

@@ -47,6 +47,9 @@ If you liked the old content, you can find it in the [archive](archive) folder.
     - [Port Scanning](#port-scanning)
     - [Content Discovery](#content-discovery)
       - [Content Discovery Lists](#content-discovery-lists)
+    - [Questions to ask yourself when doing content discovery](#questions-to-ask-yourself-when-doing-content-discovery)
+    - [Heat Mapping / Content Discovery](#heat-mapping--content-discovery)
+    - [Parameter Analysis](#parameter-analysis)
     - [Get S3 buckets](#get-s3-buckets)
     - [Add all live domains to burpsuite](#add-all-live-domains-to-burpsuite)
     - [Get IPs, PORTS, and Services](#get-ips-ports-and-services)
@@ -159,49 +162,48 @@ naabu -iL subdomains-live.txt -silent -exclude-cdn -top-ports 1000 -o ports.txt
 6. Mobile APIs
 7. Change Detection
 
-
 #### Content Discovery Lists
 
 - Download the lists from [here](https://wordlists-cdn.assetnote.io/data/)
 
 `wget -r --no-parent -R "index.html*" https://wordlists-cdn.assetnote.io/data/ -nH -e robots=off`
 
-1. Tech 
-   1. IIS / MSF 
-      1. assetnote/httparchive_aspx_asp_cfm_svc_ashx_asmx_
+1. Tech
+   1. IIS / MSF
+      1. assetnote/httparchive*aspx_asp_cfm_svc_ashx_asmx*
       2. IIS Shortname Scanner
    2. PHP + CGI
       1. assetnote/httparchive_cgi_pl
       2. assetnote/httparchive_php
    3. General API
-      1. assetnote/httparchive_apiroutes_
+      1. assetnote/httparchive*apiroutes*
       2. assetnote/swagger-wordlist
       3. seclists/Discovery/Web-Content/api/api-endpoints.txt
    4. Java
       1. assetnote/httparchive_jsp_jspa_do_action
    5. Generic
-      1. assetnote/httparchive_directories_1m_
+      1. assetnote/httparchive*directories_1m*
       2. RAFT
       3. Robots Disallowed
       4. github.com/six2dez/OneListForAll
       5. jhadix/content_discovery_all.txt
    6. Other
       1. Use Technology <=> Host Mappings from [assetnote.io](https://wordlists.assetnote.io/)
-           - adobe_experience_manager  <=> assetnote/httparchive_adobe_experience_manager
-           - apache  <=> assetnote/httparchive_apache
-           - cherrypy  <=> assetnote/httparchive_cherrypy
-           - coldfusion  <=> assetnote/httparchive_coldfusion
-           - django  <=> assetnote/httparchive_django
-           - express  <=> assetnote/httparchive_express
-           - flask  <=> assetnote/httparchive_flask
-           - laravel  <=> assetnote/httparchive_laravel
-           - nginx  <=> assetnote/httparchive_nginx
-           - rails  <=> assetnote/httparchive_rails
-           - spring  <=> assetnote/httparchive_spring
-           - symfony  <=> assetnote/httparchive_symfony
-           - tomcat  <=> assetnote/httparchive_tomcat
-           - yii  <=> assetnote/httparchive_yii
-           - zend  <=> assetnote/httparchive_zend
+         - adobe_experience_manager <=> assetnote/httparchive_adobe_experience_manager
+         - apache <=> assetnote/httparchive_apache
+         - cherrypy <=> assetnote/httparchive_cherrypy
+         - coldfusion <=> assetnote/httparchive_coldfusion
+         - django <=> assetnote/httparchive_django
+         - express <=> assetnote/httparchive_express
+         - flask <=> assetnote/httparchive_flask
+         - laravel <=> assetnote/httparchive_laravel
+         - nginx <=> assetnote/httparchive_nginx
+         - rails <=> assetnote/httparchive_rails
+         - spring <=> assetnote/httparchive_spring
+         - symfony <=> assetnote/httparchive_symfony
+         - tomcat <=> assetnote/httparchive_tomcat
+         - yii <=> assetnote/httparchive_yii
+         - zend <=> assetnote/httparchive_zend
 2. OSS (Open Source Software) / PAID / COTS (Commercial Off The Shelf)
    1. If the app is open source, you can use the source code to find endpoints
       1. You can use [Source2URL](https://github.com/danielmiessler/Source2URL/blob/master/Source2URL)
@@ -221,6 +223,78 @@ naabu -iL subdomains-live.txt -silent -exclude-cdn -top-ports 1000 -o ports.txt
    3. Monitor the target's social media accounts
    4. [change detection](https://changedetection.io/)
 
+### Questions to ask yourself when doing content discovery
+
+1. How does the app pass data?
+   1. resource?parameter=value&parameter2=value2
+   2. Method /route/resource/subresource/parameter
+2. How/Where does the app talk about the users? understand how are the users referenced in the app and where
+   1. where?
+      1. cookies
+      2. API Calls
+      3. Headers
+   2. How?
+      1. UID
+      2. UUID
+      3. email
+      4. username
+3. Does the site have multi-tenancy or user levels?
+   1. admin
+   2. user
+   3. guest
+4. Does the site has a unique threat model?
+   1. Is it a bank, hospital, streaming service, ...?
+   2. You need to test for special api keys, tokens, ...
+5. Has there past security research and vuln?
+   1. check hackerone, bugcrowd, ...
+6. How the app handles these:
+   1. XSS
+   2. CSRF
+   3. Code Injection (SQLi,Template, RCE, noSQL, ...)
+
+- Spider using Burp Suite or OWASP ZAP or [Hakrawler](https://github.com/hakluke/hakrawler) or [Gospider](https://github.com/jaeles-project/gospider)
+
+- Extact links and parse js and spider and inline javascript
+
+  - Using [xnLinkFinder](https://github.com/xnl-h4ck3r/xnLinkFinder)`xnLinkFinder -i tesla.com -d 2 -sp https://tesla.com -o tesla.txt`
+  - Using [GAP](https://github.com/xnl-h4ck3r/GAP-Burp-Extension) Burp Extension
+
+- Check for oudated js libraries using RetireJS in Burp Suite
+
+### Heat Mapping / Content Discovery
+
+1. Upload functions
+   1. Integrations (From 3rd party)
+      1. XSS
+   2. Self Uploads
+      1. XML Based (Docs, PDFs, ...)
+         1. SSRF, XSS
+      2. Image Based (JPG, PNG, ...)
+         1. Shell, XSS
+            1. Name
+            2. Binary Header
+            3. Metadata
+   3. Where is data stored?
+      1. S3 Permissions
+2. Content Types
+   1. Look for multipart-forms
+   2. Look for JSON
+   3. Look for XML
+3. API
+   1. GraphQL
+   2. REST / Methods
+4. Account Section
+   1. Profile
+      1. Stored XSS
+   2. App Custom Fields
+   3. Integrations
+      1. SSRF, XSS
+5. Errors
+
+### Parameter Analysis
+
+- Use [GF-Patterns](https://github.com/1ndianl33t/Gf-Patterns) to find parameters
+- Use [sus_params](https://github.com/g0ldencybersec/sus_params)
 
 - Run this script [content-discovery.sh](./scripts/content-discovery.sh)
 
