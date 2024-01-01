@@ -4,3 +4,6 @@
 [submodule "Nuclei-Templates-Collection"]
 	path = Nuclei-Templates-Collection
 	url = https://github.com/emadshanab/Nuclei-Templates-Collection.git
+[submodule "research"]
+	path = research
+	url = git@github.com:AnasAboreeda/Research.git

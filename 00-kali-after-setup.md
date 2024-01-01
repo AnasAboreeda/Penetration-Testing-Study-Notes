@@ -102,6 +102,7 @@ sudo apt update
 apt install getallurls -y
 apt install jq -y
 apt install -y feroxbuster
+apt install -y libpcap-dev
 
  pip3 install apkleaks
 
@@ -119,6 +120,7 @@ go install github.com/ameenmaali/wordlistgen@latest
 go install github.com/michael1026/trashcompactor@latest
 go install github.com/hakluke/hakrawler@latest
 go install github.com/jaeles-project/gospider@latest
+go install -v github.com/projectdiscovery/naabu/v2/cmd/naabu@latest
 ```
 
 ```bash
