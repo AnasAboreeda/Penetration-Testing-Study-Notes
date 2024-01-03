@@ -4,6 +4,7 @@ This is a collection of all the commands and tools I use for pentesting. I will 
 
 If you liked the old content, you can find it in the [archive](archive) folder.
 
+
 ## Bug Hunting Roadmap
 
 - [ ] Grab all the in-scope urls
@@ -466,6 +467,10 @@ nc -nlvp 9001
 - [CyberChef](https://gchq.github.io/CyberChef/)
 - [DNSDumpster](https://dnsdumpster.com/)
 - [Reverse Shell Generator](https://www.revshells.com/)
+- [Webhook Tester](https://webhook.site/)
+- [JWT Decoder](https://jwt.io/)
+- [Vulnerability Disclosure Policy and Bug Bounty List!](https://firebounty.com/)
+- [An inventory of tools and resources about CyberSecurity](https://inventory.raw.pm/resources.html)
 
 ## References
 

@@ -4,36 +4,37 @@
 
 - Program [Link](https://hackerone.com/TARGET)
 
-### In scope
+## In Scope
+
+- link1
+- link2
+- link2
+
+## Excluded URLs
 
 - link1
 - link2
 
-### Excluded URLs
-
-- link1
-- link2
-
-### Program notes
+## Program Notes
 
 - note1
-- Please limit any automated scanning to 60 requests per second.
+- Please limit any automated scanning to XXX requests per second.
 - HEADER: X-HackerOne-Research: <YOUR-USERNAME>
 
 ## ASNs & IPs
 
 - Visit [bgp.he.net](https://bgp.he.net/search?search%5Bsearch%5D=[TARGET]&commit=Search)
 
-### Result
+## Result
 
 - AS000000
 - AS000000
 
-### IPs
+## IPs
 
 - 0.0.0.0
 
-### Usage
+## Usage
 
 ```bash
 
@@ -44,9 +45,9 @@ amass intel -asn 9084,6195 -o asn.txt
 
 - Visit [crunch base](https://www.crunchbase.com/)
 
-### Acquisitions Result
+## Acquisitions Result
 
-#### [TARGET Acquisition 1](https://www.crunchbase.com/organization/)
+## [TARGET Acquisition 1](https://www.crunchbase.com/organization/)
 
 ## Linked Discovery
 
@@ -78,13 +79,13 @@ cat subdomains*.txt | sort -t '.' -k2,2 -k1,1 | uniq > subdomains.txt
 cat subdomains.txt | wc -l
 ```
 
-### Subdomain Takeover
+## Subdomain Takeover
 
 ```bash
 subzy run --targets subdomains.txt --timeout 20 --output subdomain_subzy.txt
 ```
 
-## Get live domains
+## Get Live Domains
 
 ```bash
 ~/go/bin/httpx -l subdomains.txt -o subdomains-live.txt
@@ -92,7 +93,7 @@ subzy run --targets subdomains.txt --timeout 20 --output subdomain_subzy.txt
 cat subdomains-live.txt | wc -l
 ```
 
-### Get Screenshots of the live subdomains
+## Get Screenshots of the Live Subdomains
 
 ```bash
 eyewitness -f subdomains-live.txt --web -d screenshots --timeout 100 --delay 10 --proxy-ip 127.0.0.1 --proxy-port 8080
@@ -104,7 +105,7 @@ eyewitness -f subdomains-live.txt --web -d screenshots --timeout 100 --delay 10 
 naabu -iL subdomains-live.txt -silent -exclude-cdn -top-ports 1000 -o ports.txt
 ```
 
-## Get Broken social links
+## Get Broken Social Links
 
 ```bash
 socialhunter -f subdomains-live.txt -w 10 > sociallinks-hunting.txt
@@ -112,14 +113,11 @@ socialhunter -f subdomains-live.txt -w 10 > sociallinks-hunting.txt
 cat sociallinks-hunting.txt| grep -i possible
 ```
 
-
-
 ## Intersting URLs
 
+## URL 1
 
-### URL 1
-
-#### Important Questions
+## Important Questions
 
 1. How does the app pass data?
    1. resource?parameter=value&parameter2=value2
@@ -139,17 +137,16 @@ cat sociallinks-hunting.txt| grep -i possible
    2. user
    3. guest
 4. Does the site has a unique threat model?
-   1. Is it a bank, hospital, streaming service, ...?
-   2. You need to test for special api keys, tokens, ...
+   1. Is it a bank, hospital, streaming service, …?
+   2. You need to test for special api keys, tokens, …
 5. Has there past security research and vuln?
-   1. check hackerone, bugcrowd, ...
+   1. check hackerone, bugcrowd, …
 6. How the app handles these:
    1. XSS
    2. CSRF
-   3. Code Injection (SQLi,Template, RCE, noSQL, ...)
+   3. Code Injection (SQLi,Template, RCE, noSQL, …)
 
-
-#### App Recon and analysis
+## App Recon and Analysis
 
 - [ ] Map visible content (Manually)
 - [ ] Discover hidden & default content (Direcory/File Bruteforce)
@@ -161,9 +158,9 @@ cat sociallinks-hunting.txt| grep -i possible
 - [ ] Map the attack surface automatically (Spider)
 - [ ] Identify all javascript files for later analysis (in your proxy)
 
-#### Test handling of access
+## Test Handling of Access
 
-##### - [ ] Authentication
+## - [ ] Authentication
 
 - [ ] Test password quality rules
 - [ ] Test for username enumeration
@@ -176,7 +173,7 @@ cat sociallinks-hunting.txt| grep -i possible
 - [ ] Test for fail-open conditions
 - [ ] Test any multi-stage mechanisms
 
-##### - [ ] Session handling
+## - [ ] Session Handling
 
 - [ ] Test tokens for meaning
 - [ ] Test tokens for predictability
@@ -188,13 +185,13 @@ cat sociallinks-hunting.txt| grep -i possible
 - [ ] Check for cross-site request forgery
 - [ ] Check cookie scope
 
-##### - [ ] Access controls
+## - [ ] Access Controls
 
 - [ ] Understand the access control requirements
 - [ ] Test effectiveness of controls, using multiple accounts if possible
 - [ ] Test for insecure access control methods (request parameters, Referer header, etc)
 
-#### Test handling of input
+## Test Handling of Input
 
 - [ ] Fuzz all request parameters
 - [ ] Test for SQL injection
@@ -214,7 +211,7 @@ cat sociallinks-hunting.txt| grep -i possible
 - [ ] Test for XPath injection
 - [ ] Test for SSRF and HTTP Redirrects in all redirecting parameters
 
-#### Test application logic
+## Test Application Logic
 
 - [ ] Identify the logic attack surface
 - [ ] Test transmission of data via the client
@@ -225,7 +222,7 @@ cat sociallinks-hunting.txt| grep -i possible
 - [ ] Test trust boundaries
 - [ ] Test transaction logic
 
-#### Assess application hosting
+## Assess Application Hosting
 
 - [ ] Test segregation in shared infrastructures
 - [ ] Test segregation between ASP-hosted applications
@@ -237,7 +234,7 @@ cat sociallinks-hunting.txt| grep -i possible
 - [ ] Virtual hosting mis-configuration
 - [ ] Bugs in web server software
 
-#### Miscellaneous tests
+## Miscellaneous Tests
 
 - [ ] Check for DOM-based attacks
 - [ ] Check for frame injection
@@ -249,7 +246,6 @@ cat sociallinks-hunting.txt| grep -i possible
 - [ ] Follow up any information leakage
 - [ ] Check for weak SSL ciphers
 
-### URL 2
+## URL 2
 
-### URL 3
-
+## URL 3
