@@ -4,7 +4,6 @@ This is a collection of all the commands and tools I use for pentesting. I will 
 
 If you liked the old content, you can find it in the [archive](archive) folder.
 
-
 ## Bug Hunting Roadmap
 
 - [ ] Grab all the in-scope urls

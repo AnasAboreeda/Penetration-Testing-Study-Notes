@@ -12,7 +12,7 @@
   "showStatusBar": true,
   "updateSubmodules": true,
   "syncMethod": "merge",
-  "customMessageOnAutoBackup": true,
+  "customMessageOnAutoBackup": false,
   "autoBackupAfterFileChange": true,
   "treeStructure": false,
   "refreshSourceControl": true,
