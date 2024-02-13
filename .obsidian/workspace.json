@@ -148,6 +148,11 @@
   },
   "active": "3c667902508bfaf5",
   "lastOpenFiles": [
+    "hacktricks/reversing-and-exploiting/linux-exploiting-basic-esp/elf-tricks.md",
+    "hacktricks/reversing-and-exploiting/linux-exploiting-basic-esp",
+    "hacktricks/reversing-and-exploiting",
+    "hacktricks/network-services-pentesting/4840-pentesting-opc-ua.md",
+    "hacktricks/macos-hardening/macos-security-and-privilege-escalation/macos-proces-abuse/macos-ruby-applications-injection.md",
     "nmap-summary.md",
     "Fast Testing Checklist.md",
     "00-kali-after-setup.md",
