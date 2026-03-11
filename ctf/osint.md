@@ -59,6 +59,9 @@ https://censys.io/
 # Have I Been Pwned - Breach data
 https://haveibeenpwned.com/
 
+# Hudson Rock - Infostealer intelligence
+https://www.hudsonrock.com/threat-intelligence-cybercrime-tools
+
 # Intelligence X - OSINT search engine
 https://intelx.io/
 
