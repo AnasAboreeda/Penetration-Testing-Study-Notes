@@ -238,6 +238,8 @@ exiftool -all= image.jpg
 # Online tools
 http://exif.regex.info/exif.cgi
 https://www.metadata2go.com/
+https://metadataremover.ai/metadata-viewer # Browser-local metadata viewer
+# Metadata can be stale, edited, or stripped; corroborate GPS/device/time claims with other evidence.
 ```
 
 ### Geolocation from Images
